@@ -137,6 +137,7 @@ function make_content(){
   for (i = 1; i < 5; i++){
     CumTime[i] = CumTime[i-1] + TimeSplit[i]/100;
   }
+  document.getElementById("out").innerHTML = "No Error Yet";
   
   var paramsString = window.location.search;
   var searchParams = new URLSearchParams(paramsString);
@@ -178,7 +179,6 @@ function make_content(){
     show_today_content(plan_deadline,research_deadline,organise_deadline,draft_deadline);
   }
   
-  document.getElementById("out").innerHTML = document.referrer;
   
 }
 
