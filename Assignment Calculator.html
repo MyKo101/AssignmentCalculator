@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title> Assignment Planner </title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+
+<body onload="make_content()">
+  
+<!--
+The first section here includes the actual content of each of the sections
+content can be written using proto-markdown which supports:
+
+Headings up to h3 using a number of # symbols followed by a space and ending in a new line
+Italics can be inserted by surrounding text in _ underscores
+Bold can be inserted by surrounding text in * asterisks
+Links can be inserted by using the link text in square brackets followed by the address in parentheses, e.g. [click here](www.ljmu.ac.uk)
+
+There are also various built-in shortcuts:
+\dateto will print the date when that section needs to be done by
+\datefrom will print the date when that section needs to be started
+\numdays will print the total number of days between these dates
+\section will print the current section, e.g. planning
+\Section will print the current section with a capital e.g. Planning
+\module will print the module id number from the url
+\p will start a new paragraph
+
+We can also print content for specific course modules by using the syntax ~(moduleid){content}, this module id is the id used in the url and is the same that will be printed with \module
+
+You can also define your own shortcuts by using a <div class="shortcut"></div>, see below for an example
+-->
+
+<div id="planningcontent" class="content">
+  \toplines
+  ## Introduction
+  Here we can insert details introducing the Planning phase
+  ### Links
+  And then we can _insert_ [links](https://ljmu.ac.uk). Make sure you use my *proto-markdown* style formatting!
+  ## Where are we?
+  We are currently in the \module canvas course.
+  \p
+  ~(25501){
+  This is the Maths, Stats & IT Module.
+  To see the Academic Skills Version of this calculator, click [here](https://canvas.ljmu.ac.uk/courses/25516/pages/JS-test)
+  }
+  
+  ~(25516){
+  This is the Academic Skills Module
+  To see the MSIT Version of this calculator, click [here](https://canvas.ljmu.ac.uk/courses/25516/pages/JS-test)
+  }
+  ~(mbrxsmbc){
+  We're on my home computer. How did you get here!?
+  }
+</div>
+
+<div id="researchcontent" class="content">
+  \plaintext
+</div>
+
+<div id="organisecontent" class="content">
+  \plaintext
+</div>
+
+<div id="draftingcontent" class="content">
+  \plaintext
+</div>
+
+<div id="reviewcontent" class="content">
+  \plaintext
+</div>
+
+<!--
+Here we have a keyboard shortcut example using a <div> tag. We define the <div> to be of class "shortcut" and provide an id, the example below uses the id"toplines" to do this. This will then replace any occurence of \toplines in our content with what is contained here, including replacing the other shortcuts. I have also wrapped this in another shortcut \plaintext to make all the tabs, apart from Planning currently the same.
+-->
+
+<div id="toplines" class="shortcut">
+  # \Section
+  The \section phase is expected to go from \datefrom to \dateto, giving a total of \numdays
+</div>
+
+<div id="plaintext" class="shortcut">
+  \toplines
+  ## Introduction
+  Here we can insert details introducing the \section phase.
+  ### Go Back
+  Please have a look at the Planning phase for more details
+</div>
+
+
+
+
+<!--
+This section controls the content of the webpage including the form to input dates and the container which holds the menu & content
+-->
+
+<form action="">
+  <label for="start">Start Date</label>
+  <input type="date" id="formstart" name="start">
+  <label for="end">End Date</label>
+  <input type="date" id="formend" name="end">
+  <input type="submit">
+</form>
+<br>
+
+
+
+
+<div id="container">
+  <div id="planningmenu" class="planning" onclick="show_content('planning')">
+    *Planning* <br> \numdays <br> \dateto
+  </div>
+  <div id="researchmenu" class="research" onclick="show_content('research')">
+    *Research* <br> \numdays <br> \dateto
+  </div>
+  <div id="organisemenu" class="organise" onclick="show_content('organise')">
+    *Organise* <br> \numdays <br> \dateto
+  </div>
+  <div id="draftingmenu" class="drafting" onclick="show_content('drafting')">
+    *Drafting* <br> \numdays <br> \dateto
+  </div>
+  <div id="reviewmenu" class="review" onclick="show_content('review')">
+    *Reviewing* <br> \numdays <br> \dateto
+  </div>
+  
+  <div id="contentframe">
+    
+  </div>
+
+</div>
+
+
+</body>
+</html>
