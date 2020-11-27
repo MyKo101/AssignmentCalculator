@@ -1,4 +1,7 @@
 
+function writeout(text){
+  document.getElementById("out").innerHTML = text;
+}
 
 function insertconst(text,section,from_date,to_date){
   var num_days = Math.round((to_date - from_date)/(1000 * 60 * 60 * 24));
@@ -38,8 +41,12 @@ function shortcutlist(){
   return sc_list;
 }
 
-function anyshortcuts(text){
+function anyshortcuts(text,errorcheck){
   var sc = shortcutlist();
+  if(errorcheck){
+    writeout("shortcutlist successfully loaded");
+  }
+  
   var i = 0;
   var c_length = text.length;
   
@@ -118,11 +125,19 @@ function do_subs(text,sectionname,from_date,to_date){
   return text;
 }
 
-
 function sub_text(section,sectionname,from_date,to_date){
   var src = document.getElementById(section).innerHTML;
-  while(anyshortcuts(src)){
+  if(section == "planningmenu"){
+    writeout("No Error in sub_text('planningmenu') before anyshortcuts");
+    var x=anyshortcuts(src,true);
+    writeout("No Error in sub_text('planningmenu') after anyshortcuts");
+    //Don't forget to fix the error checking in anyshortcuts
+  }
+  while(anyshortcuts(src,false)){
     src = do_subs(src,sectionname,from_date,to_date);
+  }
+  if(section == "planningmenu"){
+    writeout("src was edited");
   }
   document.getElementById(section).innerHTML = src;
 }
@@ -137,7 +152,6 @@ function make_content(){
   for (i = 1; i < 5; i++){
     CumTime[i] = CumTime[i-1] + TimeSplit[i]/100;
   }
-  document.getElementById("out").innerHTML = "No Error Yet";
   
   var paramsString = window.location.search;
   var searchParams = new URLSearchParams(paramsString);
@@ -161,6 +175,7 @@ function make_content(){
     var review_deadline = new Date(start.getTime() + CumTime[4]*diffTime);
     
     
+    writeout("No Error before first sub_text");
   
     sub_text('planningmenu',"Planning",start,plan_deadline);
     sub_text('planningcontent',"Planning",start,plan_deadline); 
