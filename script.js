@@ -177,5 +177,12 @@ function make_content(){
     
     show_today_content(plan_deadline,research_deadline,organise_deadline,draft_deadline);
   }
+  
+  const currentIframeHref = new URL(document.location.href);
+  const urlOrigin = currentIframeHref.origin;
+  const urlFilePath = decodeURIComponent(currentIframeHref.pathname);
+  
+  document.getElementById("out").innerHTML = urlFilePath;
+  
 }
 
