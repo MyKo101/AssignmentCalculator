@@ -41,12 +41,8 @@ function shortcutlist(){
   return sc_list;
 }
 
-function anyshortcuts(text,errorcheck){
+function anyshortcuts(text){
   var sc = shortcutlist();
-  if(errorcheck){
-    writeout("shortcutlist successfully loaded");
-  }
-  
   var i = 0;
   var c_length = text.length;
   
@@ -119,25 +115,20 @@ function show_today_content(plan_dt,research_dt,organise_dt,draft_dt){
 }
 
 function do_subs(text,sectionname,from_date,to_date){
+  writeout("Starting do_subs with" + sectionname);
   text = insertshortcuts(text);
+  writeout("insertshortcuts is done. With" + sectionname);
   text = insertconst(text,sectionname,from_date,to_date);
+  writeout("insertconst is done. With" + sectionname);
   text = markdowny(text);
+  writeout("markdowny is done. With" + sectionname);
   return text;
 }
 
 function sub_text(section,sectionname,from_date,to_date){
   var src = document.getElementById(section).innerHTML;
-  if(section == "planningmenu"){
-    writeout("No Error in sub_text('planningmenu') before anyshortcuts");
-    var x=anyshortcuts(src,true);
-    writeout("No Error in sub_text('planningmenu') after anyshortcuts");
-    //Don't forget to fix the error checking in anyshortcuts
-  }
-  while(anyshortcuts(src,false)){
+  while(anyshortcuts(src)){
     src = do_subs(src,sectionname,from_date,to_date);
-  }
-  if(section == "planningmenu"){
-    writeout("src was edited");
   }
   document.getElementById(section).innerHTML = src;
 }
@@ -175,8 +166,6 @@ function make_content(){
     var review_deadline = new Date(start.getTime() + CumTime[4]*diffTime);
     
     
-    writeout("No Error before first sub_text");
-  
     sub_text('planningmenu',"Planning",start,plan_deadline);
     sub_text('planningcontent',"Planning",start,plan_deadline); 
     sub_text('researchmenu',"Research",plan_deadline,research_deadline);
