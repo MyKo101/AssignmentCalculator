@@ -74,11 +74,13 @@ function insertshortcuts(text){
   var c_id;
   var c_text;
   for (i = 0; i < sc.length; i++) {
-    writeout("starting shortcuts i = "+i);
+    writeout("starting shortcuts, i = "+i);
     c_id = sc[i].id;
+    writeout("grabbed sc[i].id, i = "+i);
     c_text = sc[i].innerHTML;
+    writeout("grabbed sc[i].innerHTML, i = "+i);
     text = text.replaceAll("\\"+c_id,c_text);
-    writeout("finishing shortcuts i = "+i);
+    writeout("finishing shortcuts, i = "+i);
   }
   return text;
 }
