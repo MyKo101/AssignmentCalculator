@@ -69,13 +69,16 @@ function toTitleCase(text){
 
 function insertshortcuts(text){
   var sc = document.getElementsByClassName("shortcut");
+  writeout("loaded shortcuts");
   var i;
   var c_id;
   var c_text;
   for (i = 0; i < sc.length; i++) {
+    writeout("starting shortcuts i = "+i);
     c_id = sc[i].id;
     c_text = sc[i].innerHTML;
     text = text.replaceAll("\\"+c_id,c_text);
+    writeout("finishing shortcuts i = "+i);
   }
   return text;
 }
@@ -115,13 +118,9 @@ function show_today_content(plan_dt,research_dt,organise_dt,draft_dt){
 }
 
 function do_subs(text,sectionname,from_date,to_date){
-  writeout("Starting do_subs with" + sectionname);
   text = insertshortcuts(text);
-  writeout("insertshortcuts is done. With" + sectionname);
   text = insertconst(text,sectionname,from_date,to_date);
-  writeout("insertconst is done. With" + sectionname);
   text = markdowny(text);
-  writeout("markdowny is done. With" + sectionname);
   return text;
 }
 
