@@ -73,13 +73,16 @@ function insertshortcuts(text){
   var i;
   var c_id;
   var c_text;
+  var re;
   for (i = 0; i < sc.length; i++) {
     writeout("starting shortcuts, i = "+i);
     c_id = sc[i].id;
     writeout("grabbed sc[i].id, i = "+i);
     c_text = sc[i].innerHTML;
     writeout("grabbed sc[i].innerHTML, i = "+i);
-    text = text.replaceAll("\\"+c_id,c_text);
+    re = new RegExp("\\"+c_id,"g");
+    writeout("Created the regex, i = "+ 1);
+    text = text.replace(re,c_text);
     writeout("finishing shortcuts, i = "+i);
   }
   return text;
@@ -128,9 +131,9 @@ function do_subs(text,sectionname,from_date,to_date){
 
 function sub_text(section,sectionname,from_date,to_date){
   var src = document.getElementById(section).innerHTML;
-  while(anyshortcuts(src)){
+  //while(anyshortcuts(src)){
     src = do_subs(src,sectionname,from_date,to_date);
-  }
+  //}
   document.getElementById(section).innerHTML = src;
 }
 
