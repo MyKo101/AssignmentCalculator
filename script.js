@@ -12,13 +12,13 @@ function insertconst(text,section,from_date,to_date){
     num_days = num_days + " days";
   }
   
-  text = text.replaceAll("\\datefrom",from_date.toDateString());
-  text = text.replaceAll("\\dateto",to_date.toDateString());
-  text = text.replaceAll("\\numdays",num_days);
-  text = text.replaceAll("\\section",section.toLowerCase());
-  text = text.replaceAll("\\Section",toTitleCase(section));
-  text = text.replaceAll("\\module",getModule());
-  text = text.replaceAll("\\p","<br><br>");
+  text = text.replace(/\\datefrom/g,from_date.toDateString());
+  text = text.replace(/\\dateto/g,to_date.toDateString());
+  text = text.replace(/\\numdays/g,num_days);
+  text = text.replace(/\\section/g,section.toLowerCase());
+  text = text.replace(/\\Section/g,toTitleCase(section));
+  text = text.replace(/\\module/g,getModule());
+  text = text.replace(/\\p/g,"<br><br>");
   return text;
 }
 
@@ -80,10 +80,10 @@ function insertshortcuts(text){
     writeout("grabbed sc[i].id, i = "+i);
     c_text = sc[i].innerHTML;
     writeout("grabbed sc[i].innerHTML, i = "+i);
-    re = new RegExp("\\"+c_id,"g");
-    writeout("Created the regex, i = "+ 1);
+    re = new RegExp("\\\\"+c_id,"g");
+    writeout("Created the regex:" + re.toString()+ " i = "+ 1);
     text = text.replace(re,c_text);
-    writeout("finishing shortcuts, i = "+i);
+    //writeout("finishing shortcuts, i = "+i);
   }
   return text;
 }
@@ -131,9 +131,9 @@ function do_subs(text,sectionname,from_date,to_date){
 
 function sub_text(section,sectionname,from_date,to_date){
   var src = document.getElementById(section).innerHTML;
-  //while(anyshortcuts(src)){
+  while(anyshortcuts(src)){
     src = do_subs(src,sectionname,from_date,to_date);
-  //}
+  }
   document.getElementById(section).innerHTML = src;
 }
 
