@@ -1,7 +1,4 @@
 
-function writeout(text){
-  document.getElementById("out").innerHTML = text;
-}
 
 function insertconst(text,section,from_date,to_date){
   var num_days = Math.round((to_date - from_date)/(1000 * 60 * 60 * 24));
@@ -63,7 +60,12 @@ function getFaculty(){
   var searchParams = new URLSearchParams(paramsString);
   
   if(searchParams.has("fac")){
-    return searchParams.get("fac");
+    var c_fac = searchParams.get("fac");
+    if(c_fac == ""){
+      return "&lt;default&gt;";
+    } else {
+      return searchParams.get("fac");
+    }
   } else {
     return "&lt;default&gt;";
   }
@@ -142,12 +144,13 @@ function updateform(){
   var searchParams = new URLSearchParams(paramsString);
   
   if(searchParams.has("fac")){
-    c_fac = searchParams.get("fac");
+    var c_fac = searchParams.get("fac");
     document.getElementById("formfac").defaultValue=c_fac;
   }
 }
 
 function make_content(){
+  
   
   let TimeSplit = [ 5, 60, 13, 15, 7]; 
   let CumTime = [0,0,0,0,0];
