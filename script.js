@@ -17,13 +17,13 @@ function insertconst(text,section,from_date,to_date){
   text = text.replace(/\\numdays/g,num_days);
   text = text.replace(/\\section/g,section.toLowerCase());
   text = text.replace(/\\Section/g,toTitleCase(section));
-  text = text.replace(/\\module/g,getModule());
+  text = text.replace(/\\faculty/g,getFaculty());
   text = text.replace(/\\p/g,"<br><br>");
   return text;
 }
 
-function writeModule(match,p1,p2){
-  if(p1 == getModule()){
+function writeFaculty(match,p1,p2){
+  if(p1 == getFaculty()){
     return p2;
   } else {
     return "";
@@ -32,7 +32,7 @@ function writeModule(match,p1,p2){
 
 function shortcutlist(){
   var sc_list = ["\\datefrom", "\\dateto", "\\numdays", "\\section",
-                  "\\Section", "\\module"];
+                  "\\Section", "\\faculty"];
   var sc_elements = document.getElementsByClassName("shortcut");
   var i;
   for( i = 0; i < sc_elements.length; i++){
@@ -58,9 +58,15 @@ function anyshortcuts(text){
   }
 }
 
-function getModule(){
-  var url = window.location.pathname.split('/');
-  return url[3];
+function getFaculty(){
+  var paramsString = window.location.search;
+  var searchParams = new URLSearchParams(paramsString);
+  
+  if(searchParams.has("fac")){
+    return searchParams.get("fac");
+  } else {
+    return "&lt;default&gt;";
+  }
 }
 
 function toTitleCase(text){
@@ -69,21 +75,15 @@ function toTitleCase(text){
 
 function insertshortcuts(text){
   var sc = document.getElementsByClassName("shortcut");
-  writeout("loaded shortcuts");
   var i;
   var c_id;
   var c_text;
   var re;
   for (i = 0; i < sc.length; i++) {
-    writeout("starting shortcuts, i = "+i);
     c_id = sc[i].id;
-    writeout("grabbed sc[i].id, i = "+i);
     c_text = sc[i].innerHTML;
-    writeout("grabbed sc[i].innerHTML, i = "+i);
     re = new RegExp("\\\\"+c_id,"g");
-    writeout("Created the regex:" + re.toString()+ " i = "+ 1);
     text = text.replace(re,c_text);
-    //writeout("finishing shortcuts, i = "+i);
   }
   return text;
 }
@@ -95,7 +95,7 @@ function markdowny(text){
   text = text.replace(/\*(.*)\*/g,"<b>$1</b>");
   text = text.replace(/_(.*)_/g,"<i>$1</i>");
   text = text.replace(/\[(.*?)\]\((.*?)\)/g,"<a href=\"$2\">$1</a>");
-  text = text.replace(/\~\(([^)]+)\)\{([^}]+)\}/g,writeModule);
+  text = text.replace(/\~\(([^)]+)\)\{([^}]+)\}/g,writeFaculty);
   return text;
 }
 
@@ -137,7 +137,18 @@ function sub_text(section,sectionname,from_date,to_date){
   document.getElementById(section).innerHTML = src;
 }
 
+function updateform(){
+  var paramsString = window.location.search;
+  var searchParams = new URLSearchParams(paramsString);
+  
+  if(searchParams.has("fac")){
+    c_fac = searchParams.get("fac");
+    document.getElementById("formfac").defaultValue=c_fac;
+  }
+}
+
 function make_content(){
+  
   let TimeSplit = [ 5, 60, 13, 15, 7]; 
   let CumTime = [0,0,0,0,0];
   

@@ -38,19 +38,26 @@ You can also define your own shortcuts by using a <div class="shortcut"></div>, 
   ### Links
   And then we can _insert_ [links](https://ljmu.ac.uk). Make sure you use my *proto-markdown* style formatting!
   ## Where are we?
-  We are currently in the \module canvas course.
+  We are currently in the \faculty canvas course.
   \p
-  ~(25501){
-  This is the Maths, Stats & IT Module.
-  To see the Academic Skills Version of this calculator, click [here](https://canvas.ljmu.ac.uk/courses/25516/pages/JS-test)
+  ~(FET){
+  This is the FET Faculty.
+  \p
+  So here is where we would write content for the Faculty of Engineering & Technology
   }
-  
-  ~(25516){
-  This is the Academic Skills Module
-  To see the MSIT Version of this calculator, click [here](https://canvas.ljmu.ac.uk/courses/25516/pages/JS-test)
+  ~(APSS){
+  This is the APSS Faculty.
+  \p
+  Here, we would write content for the \Section phase of the Assignment Calculator for the Faculty of Arts, Professional and Social Studies.
   }
-  ~(mbrxsmbc){
-  We're on my home computer. How did you get here!?
+  ~(Health){
+  This is the content for the Health faculty.
+  }
+  ~(Science){
+  We can write separate content for each of the faculties by using the correct syntax.
+  }
+  ~(BL){
+  Business & Law content is here.
   }
 </div>
 
@@ -94,16 +101,14 @@ Here we have a keyboard shortcut example using a <div> tag. We define the <div> 
 This section controls the content of the webpage including the form to input dates and the container which holds the menu & content
 -->
 
-<div style="height:50px;border-style:solid;width:50%;"id="out">
-  Blank
-</div>
 
-<form action="">
+<form id="submitdates">
   <label for="start">Start Date</label>
   <input type="date" id="formstart" name="start">
   <label for="end">End Date</label>
   <input type="date" id="formend" name="end">
   <input type="submit">
+  <input type="hidden" id="formfac" name="fac" value="FET">
 </form>
 <br>
 
